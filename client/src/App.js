@@ -14,7 +14,11 @@ import Conclude from './features/users/Conclude';
 function App() {
   return (
     <>
+
        <h1>conflict2</h1>
+=======
+    <h1>conflict1</h1>
+
      <Routes path='/' element={<Home/>}>
           <Route index element={<Home/>} />
           <Route path='/user/products' element={<ProductsList />} />
