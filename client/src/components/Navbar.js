@@ -58,28 +58,23 @@ const Navbar = () => {
 
     const end = (
         <>
-        
-        <div style={{  left: "5%",top:"20%" }} >
-       
-            <div className="flex align-items-center gap-2">
-                <Button icon="pi pi-shopping-cart" rounded aria-label="Filter" onClick={(e) => op.current.toggle(e)} />
-                
-                {/* <Button icon="pi pi-check" onClick={()=>alert("a")}/> */}
-                <OverlayPanel ref={op}>
-                    <Basket />
-                </OverlayPanel>
-                <Button icon='pi pi-user' label='יציאה' onClick={() => setLogoutVisible(true)} ></Button>
-            </div></div></>
-
+            <div style={{ position: 'absolute', left: "5%", top: "20%" }} >
+                <div className="flex align-items-center gap-2">
+                    <Button icon="pi pi-shopping-cart" rounded aria-label="Filter" onClick={(e) => op.current.toggle(e)} />
+                    <OverlayPanel ref={op}>
+                        <Basket />
+                    </OverlayPanel>
+                    <Button icon='pi pi-user' label='יציאה' onClick={() => setLogoutVisible(true)} ></Button>
+                </div></div></>
     );
-    const logout=()=>{
-        setLogoutVisible(false); 
+    const logout = () => {
+        setLogoutVisible(false);
         dispatch(removeToken())
         navigate('/')
     }
     const logoutDialogFooter = (
         <React.Fragment>
-            <Button label="אישור" icon="pi pi-check" autoFocus onClick={() => {logout()}} />
+            <Button label="אישור" icon="pi pi-check" autoFocus onClick={() => { logout() }} />
             <Button label="ביטול" icon="pi pi-times" outlined onClick={() => setLogoutVisible(false)} />
         </React.Fragment>
     );

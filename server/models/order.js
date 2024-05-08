@@ -10,7 +10,7 @@ const orderSchema = new mongoose.Schema({
     },
     orderDate: {
         type: Date,
-        default:formatDate(new Date(), "yyyy-MM-dd")
+        default:formatDate(new Date(), "yyyy-MM-dd\tHH:mm:ss")
     },
     paid: {
         type: Boolean,

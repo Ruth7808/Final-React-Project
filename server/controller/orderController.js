@@ -12,7 +12,6 @@ const getAllOrders = async (req, res) => {
 }
 
 const getManagerOrders=async (req, res) => {
-
         const orders = await Order.find().populate("productsList.prod").populate("user", { password: 0 }).lean()
         if (!orders) {
             return res.json([])
@@ -55,7 +54,6 @@ const updateOrder = async (req, res) => {
     if (!_id)
         return res.status(400).json("id is required")
     const order = await Order.findById({ _id }).populate("productsList.prod").exec()
-
     if (!order)
         return res.status(400).json(" order not found")
     let price = 0
@@ -68,8 +66,6 @@ const updateOrder = async (req, res) => {
         if (order.comments.length > 0)
             order.comments = [...order.comments, comment]
         else order.comments = [comment]
-
-
     const myUpdateOrder = await order.save()
     res.json(myUpdateOrder)
 }
@@ -117,7 +113,6 @@ const addProductValue = async (req, res) => {
     const updateOrder = await order.save()
     res.json(updateOrder)
 }
-
 
 const addComment = async (req, res) => {
     const { _id, comment } = req.body
