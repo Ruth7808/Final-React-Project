@@ -26,7 +26,7 @@ const ProductsList = () => {
                         <Card
                         class="flex align-items-center justify-content-center font-bold m-2 border-round"
                             title={product.name} className="md:w-25rem"
-                            style={{ margin: '5%' ,minWidth:"40%"}}>
+                            style={{ margin: '5%' ,minWidth:"40%",border:"solid",padding:"1%"}}>
                             <p></p>
                             <p>ש"ח {product.price}</p>
                             <div className="card flex justify-content-center">

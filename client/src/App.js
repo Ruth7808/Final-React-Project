@@ -14,12 +14,6 @@ import Conclude from './features/users/Conclude';
 function App() {
   return (
     <>
-<<<<<<< HEAD
-=======
-
-       <h1>conflict222</h1>
-       <h1>conflict1</h1>
->>>>>>> 92256690c65a16fb5dad50c92de081672a2dff2c
      <Routes path='/' element={<Home/>}>
           <Route index element={<Home/>} />
           <Route path='/user/products' element={<ProductsList />} />

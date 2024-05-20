@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar';
 import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { Divider } from 'primereact/divider';
 const OrderList = () => {
     const { data, isLoading, isError, error } = useGetOrdersQuery()
     const [addComment] = useAddCommentMutation()
@@ -21,24 +22,25 @@ const OrderList = () => {
     }
     return (
         <>
-            <nav style={{ position: "fixed", width: "100%",zIndex:10 }}>
+            <nav style={{ position: "fixed", width: "100%", zIndex: 10 }}>
                 <Navbar /></nav>
-            <div style={{ padding: "150px",zIndex:1 }}>
+            <div style={{ padding: "150px", zIndex: 1 }}>
                 {data.map(e => {
                     return <div style={{ direction: 'rtl' }} className="card">
-                        <div>{e.orderDate}</div>
-                        <div>{e.price}</div>
-                        <div>{e.paid}</div>
-                        <div>{e.price - e.paid}</div>
-                        <div>{e.payment}</div>
-                        <div>
-                            <Button label="להוספת הערה" icon="pi pi-plus" onClick={() => { setVisibleComment(true); setId(e._id) }}></Button>
+                        <div style={{ border: "solid ",width:"320px" }}>
+                            <div>תאריך הזמנה: {e.orderDate}</div>
+                            <div>מחיר כולל: {e.price}</div>
+                            <div>אמצעי תשלום: {e.payment}</div>
                         </div>
+                        <Button label="להוספת הערה" icon="pi pi-plus" onClick={() => { setVisibleComment(true); setId(e._id) }}></Button>
+
                         <DataTable value={e.productsList} showGridlines >
                             <Column style={{ textAlign: 'right' }} field="prod.name" header="שם מוצר"></Column>
                             <Column style={{ textAlign: 'right' }} field="prod.price" header="מחיר ליחידה"></Column>
                             <Column style={{ textAlign: 'right' }} field="quantity" header="כמות"></Column>
                         </DataTable>
+                        
+                        <br/><Divider/><br/>
                     </div>
                 })}
                 <Dialog visible={visibleComment} onHide={() => setVisibleComment(false)}>

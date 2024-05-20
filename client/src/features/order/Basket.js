@@ -16,8 +16,8 @@ const Basket = () => {
     if (data.length === 0)
         return <h1>סל המוצרים ריק</h1>
 
-    const handleChange = (prod, quantity) => {
-        addProductValue({ prod, quantity })
+    const handleChange = async(prod, quantity) => {
+       await addProductValue({ prod, quantity })
     }
 
     const itemTemplate = (item) => {
@@ -30,7 +30,7 @@ const Basket = () => {
                             value={item.quantity}
                             style={{ direction: 'ltr', margin: "2%" }}
                             mode="decimal" showButtons min={0}
-                            onChange={(e) => handleChange(item.prod._id, e.value)} />
+                            onChange={(e) => handleChange(item.prod._id, Number(e.value))} />
                         <span>
                             <Button icon="pi pi-trash" 
                             rounded outlined aria-label="Filter" 
