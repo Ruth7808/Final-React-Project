@@ -30,8 +30,8 @@ const Conclude = () => {
                         })
                        
                         ord.productsList.map(e => {
-                    // let findProd=product.find(p=>p.prod._id==e.prod._id)
-                    // findProd.quantity=findProd.quantity+e.quantity
+                    let findProd=product.find(p=>p.prod._id==e.prod._id)
+                    findProd.quantity=findProd.quantity+e.quantity
                     let findP = []
                     findProduct.forEach((p) => {
                         let prod = p;

@@ -34,7 +34,7 @@ const OrdersManager = () => {
     const [globalFilter, setGlobalFilter] = useState(null);
     const toast = useRef(null);
     const dt = useRef(null);
-
+    const [sum,setSum]=useState(0)
     const [updateOrder] = useUpdateOrderMutation()
     const [deleteOrder] = useDeleteOrderMutation()
 
@@ -44,6 +44,10 @@ const OrdersManager = () => {
         if(isSuccess)
         {
             setOrders(data)
+            for (let index = 0; index < data.length; index++) {
+                setSum(sum+data[index].price)
+                
+            }
         }
     }, [isSuccess]);
 

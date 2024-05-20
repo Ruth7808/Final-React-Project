@@ -29,7 +29,6 @@ const login = async (req, res) => {
     const { userName, password } = req.body
     if (!userName || !password)
         return res.status(404).json({ message: "All fields are required" })
-        console.log("AAAAAAAAAAAAAAAAAAAAAA");
     const foundUser = await User.findOne({ userName }).lean()
     if (!foundUser)
         return res.status(401).json({ message: "Unauthorized" })

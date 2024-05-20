@@ -15,7 +15,7 @@ const AddOrder = () => {
     const [nedarimplus,setNedarimplus]=useState(false)
     const [_id,set_id]=useState('')
     const [userName,setUserName]=useState('')
-    const [price,setPrice]=useState(7)
+    const [price,setPrice]=useState(0)
     const [paid,setPaid]=useState(false)
     const [payment,setPayment]=useState('מזומן')
     const [comment,setComment]=useState('')
@@ -65,7 +65,7 @@ const AddOrder = () => {
         })
         debugger
         setPrice(newPrice)
-        const { error: err } = await addOrder({_id,userName,price:newPrice,paid,payment,comment,productsList,completed:true})
+        const { error: err } = await addOrder({_id,userName,price:newPrice+7,paid,payment,comment,productsList,completed:true})
         if (!err) {
             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'ההזמנה נוצרה בהצלחה', life: 3000 });
         }

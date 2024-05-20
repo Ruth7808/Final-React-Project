@@ -10,7 +10,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 
 const OkOrder = () => {
     const [selectedPayments, setSelectedPayments] = useState('מזומן');
-    const[price,setPrice]=useState(7)
+    const[price,setPrice]=useState(0)
     const [nedarimplus,setNedarimplus]=useState(false)
     const payments = [  
         { name: 'מזומן'},
@@ -63,7 +63,7 @@ const OkOrder = () => {
                         <Column style={{ textAlign: 'right' }} field="prod.name" header="שם מוצר"></Column>
                         <Column dataType="input" style={{ textAlign: 'right' }} field="quantity" header="כמות"></Column>
                     </DataTable>
-                    <h1>סה"כ לתשלום {price}</h1>
+                    <h1>סה"כ לתשלום {price+7}</h1>
                        
                     <div style={{margin:"10%"}}>
                          <h4>בחר אמצעי תשלום</h4>
@@ -87,7 +87,7 @@ const OkOrder = () => {
                     </div>
                     <Button label="ביטול" severity="secondary" icon="pi pi-times" style={{ marginLeft: '0.5em' }}
                         onClick={() => navigate("/user/orders")} />
-                    <Button type="submit" label="אישור" className="mt-2" icon="pi pi-check" onClick={()=>{complete({ payment: selectedPayments ,price,comment});navigate("/user/orders")}}
+                    <Button type="submit" label="אישור" className="mt-2" icon="pi pi-check" onClick={()=>{complete({ payment: selectedPayments ,price:price+7,comment});navigate("/user/orders")}}
                     />
                 </Card>
             </div>
