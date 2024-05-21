@@ -18,7 +18,6 @@ function App() {
           <Route index element={<Home/>} />
           <Route path='/user/products' element={<ProductsList />} />
           <Route path='/user/orders' element={<OrderList/>} />
-          <Route path='/user/contact' element={<h1>contact</h1>} />
           <Route path='/user/okorder' element={<OkOrder />} />
           <Route path='/manager/products' element={<ProductsManager />} />
           <Route path='/manager/orders' element={<OrdersManager/>} />
