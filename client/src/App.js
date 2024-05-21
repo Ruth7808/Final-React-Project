@@ -14,10 +14,6 @@ import Conclude from './features/users/Conclude';
 function App() {
   return (
     <>
-
-    <h1>conflict from sara</h1>
-    <>hello word_this conflict from ruth</>
-    <>fixed conflict</>
      <Routes path='/' element={<Home/>}>
           <Route index element={<Home/>} />
           <Route path='/user/products' element={<ProductsList />} />
@@ -33,7 +29,6 @@ function App() {
           <Route path='/manager/users' element={<ManagerUsers/>} />
           <Route path='/manager/conclude' element={<Conclude/>} />
       </Routes>
-      <h1>conflict that system could fix</h1>
     </>
   );
 }
