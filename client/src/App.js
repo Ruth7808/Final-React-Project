@@ -17,6 +17,7 @@ function App() {
     <h1>conflict from sara</h1>
     <>hello word_this conflict from ruth</>
     <>fixed conflict</>
+    <>without conflict</>
      <Routes path='/' element={<Home/>}>
           <Route index element={<Home/>} />
           <Route path='/user/products' element={<ProductsList />} />
