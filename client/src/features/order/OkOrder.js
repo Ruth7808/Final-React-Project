@@ -51,7 +51,10 @@ const OkOrder = () => {
     if (data.length === 0)
         return <h1>אין מוצרים בהזמנה</h1>
     
-    
+    const completeOrder=()=>{
+        
+        complete({ payment: selectedPayments ,price:price+7,comment});navigate("/user/orders")
+    }
 
     return (
         <>
@@ -87,7 +90,7 @@ const OkOrder = () => {
                     </div>
                     <Button label="ביטול" severity="secondary" icon="pi pi-times" style={{ marginLeft: '0.5em' }}
                         onClick={() => navigate("/user/orders")} />
-                    <Button type="submit" label="אישור" className="mt-2" icon="pi pi-check" onClick={()=>{complete({ payment: selectedPayments ,price:price+7,comment});navigate("/user/orders")}}
+                    <Button type="submit" label="אישור" className="mt-2" icon="pi pi-check" onClick={()=>completeOrder()}
                     />
                 </Card>
             </div>

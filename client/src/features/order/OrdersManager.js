@@ -93,8 +93,8 @@ const OrdersManager = () => {
         setDeleteOrdDialog(true);
     };
 
-    const deleteOrd = () => {
-        const { error: e } = deleteOrder({ _id: ord._id })
+    const deleteOrd =async () => {
+        const { error: e } =await deleteOrder({ _id: ord._id })
         setDeleteOrdDialog(false);
         setOrd(emptyOrd);
         if (!e) toast.current.show({ severity: 'success', summary: 'Successful', detail: 'ההזמנה נמחקה בהצלחה', life: 3000 });

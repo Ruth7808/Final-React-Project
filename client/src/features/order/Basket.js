@@ -19,7 +19,6 @@ const Basket = () => {
     const handleChange = async(prod, quantity) => {
        await addProductValue({ prod, quantity })
     }
-
     const itemTemplate = (item) => {
         return (
             <div className="flex flex-wrap p-2 align-items-center gap-3">

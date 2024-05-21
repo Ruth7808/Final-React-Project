@@ -63,14 +63,25 @@ const AddOrder = () => {
             newPrice = newPrice+Number(p.quantity) * Number(p.prod.price)
             
         })
-        debugger
+        
         setPrice(newPrice)
-        const { error: err } = await addOrder({_id,userName,price:newPrice+7,paid,payment,comment,productsList,completed:true})
-        if (!err) {
-            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'ההזמנה נוצרה בהצלחה', life: 3000 });
+        if(payment=='נדרים פלוס'){
+            const { error: err } = await addOrder({_id,userName,price:(newPrice+7)*1.02,paid,payment,comment,productsList,completed:true})
+            if (!err) {
+                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'ההזמנה נוצרה בהצלחה', life: 3000 });
+            }
+            else toast.current.show({ severity: 'error', summary: 'Error', detail: 'ההזמנה נכשלה', life: 3000 });
+            setOrderDialog(false);
         }
-        else toast.current.show({ severity: 'error', summary: 'Error', detail: 'ההזמנה נכשלה', life: 3000 });
-        setOrderDialog(false);
+        else{
+            const { error: err } = await addOrder({_id,userName,price:(newPrice+7),paid,payment,comment,productsList,completed:true})
+            if (!err) {
+                toast.current.show({ severity: 'success', summary: 'Successful', detail: 'ההזמנה נוצרה בהצלחה', life: 3000 });
+            }
+            else toast.current.show({ severity: 'error', summary: 'Error', detail: 'ההזמנה נכשלה', life: 3000 });
+            setOrderDialog(false);
+        }
+        
         
     };
     const handleChange = (prod) => {
