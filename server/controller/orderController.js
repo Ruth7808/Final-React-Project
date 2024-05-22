@@ -79,6 +79,7 @@ const deleteOrder = async (req, res) => {
 
 }
 const addProduct = async (req, res) => {
+    console.log(req.user);
     const user = req.user._id
     const { prod, quantity } = req.body
     if (!prod)

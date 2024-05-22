@@ -30,8 +30,9 @@ const OkOrder = () => {
         let p=0
         data.map(item => {
             p=p+item.quantity * item.prod.price
-            setPrice(p)
+            
     })
+    setPrice(p)
     },[])
 
     useEffect(()=>{

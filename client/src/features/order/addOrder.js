@@ -12,10 +12,7 @@ import { useGetUsersQuery } from "../manager/usersApiSlice"
 
 const AddOrder = () => {
 
-    const [nedarimplus,setNedarimplus]=useState(false)
-    const [_id,set_id]=useState('')
     const [userName,setUserName]=useState('')
-    const [price,setPrice]=useState(0)
     const [paid,setPaid]=useState(false)
     const [payment,setPayment]=useState('מזומן')
     const [comment,setComment]=useState('')
@@ -28,26 +25,12 @@ const AddOrder = () => {
     const { data, isLoading, isError, error } = useGetUsersQuery()
     useEffect(() => {
         if (isSuccess) {
-            const newList = []
-            products.map(p => {
-                newList.push({ prod: p, quantity: 0 })
-            })
+            const newList=products.map(prod=>{return{prod,quantity:0}})
             setProductsList(newList)
         }
     }, [products])
 
 
-    useEffect(()=>{
-        
-        if(payment=='נדרים פלוס'){
-        setNedarimplus(true)
-        setPrice(pre=>Math.fround(pre*1.02))
-        }
-        else if(nedarimplus){
-            setPrice(prev=>prev/1.02)
-            setNedarimplus(false)
-        }
-    },[payment])
     if (isLoad) return <h1>Loading</h1>
     if (isErr) return <h2>{err}</h2>
     if (isLoading) return <h1>Loading</h1>
@@ -56,17 +39,13 @@ const AddOrder = () => {
     const usernames = data.map(e => e.userName)
     const saveOrd = async () => {
         let newPrice = 0
-
         const newList = productsList.filter(p => Number(p.quantity) > 0)
-        setProductsList(a=>newList)
-        newList.map(async p => {
+        newList.map(p => {
             newPrice = newPrice+Number(p.quantity) * Number(p.prod.price)
-            
         })
         
-        setPrice(newPrice)
         if(payment=='נדרים פלוס'){
-            const { error: err } = await addOrder({_id,userName,price:(newPrice+7)*1.02,paid,payment,comment,productsList,completed:true})
+            const { error: err } = await addOrder({userName,price:(newPrice+7)*1.02,paid,payment,comment,productsList:newList,completed:true})
             if (!err) {
                 toast.current.show({ severity: 'success', summary: 'Successful', detail: 'ההזמנה נוצרה בהצלחה', life: 3000 });
             }
@@ -74,7 +53,7 @@ const AddOrder = () => {
             setOrderDialog(false);
         }
         else{
-            const { error: err } = await addOrder({_id,userName,price:(newPrice+7),paid,payment,comment,productsList,completed:true})
+            const { error: err } = await addOrder({userName,price:(newPrice+7),paid,payment,comment,productsList:newList,completed:true})
             if (!err) {
                 toast.current.show({ severity: 'success', summary: 'Successful', detail: 'ההזמנה נוצרה בהצלחה', life: 3000 });
             }

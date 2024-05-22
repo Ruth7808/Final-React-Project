@@ -37,7 +37,7 @@ const OrdersManager = () => {
     const [sum,setSum]=useState(0)
     const [updateOrder] = useUpdateOrderMutation()
     const [deleteOrder] = useDeleteOrderMutation()
-
+    const [rerenderKey, setRerenderKey] = useState(0);
     const { data, isLoading, isError, error,isSuccess } = useGetAllUsersOrdersQuery()
 
     useEffect(() => {
@@ -50,7 +50,9 @@ const OrdersManager = () => {
             }
         }
     }, [isSuccess]);
-
+    useEffect(() => {
+        
+    }, [rerenderKey]);
 
      if (isLoading) return <h1>Loading</h1>
      if (isError) return <h2>{error}</h2>
@@ -75,6 +77,7 @@ const OrdersManager = () => {
         const { error: err } = await updateOrder(ord)
         if (!err) {
             toast.current.show({ severity: 'success', summary: 'Successful', detail: 'ההזמנה בוצעה בהצלחה', life: 3000 });
+            setRerenderKey((prevKey) => prevKey + 1);
         }
         else toast.current.show({ severity: 'error', summary: 'Error', detail: 'ההזמנה נכשלה', life: 3000 });
         setOrdDialog(false);
@@ -97,7 +100,10 @@ const OrdersManager = () => {
         const { error: e } =await deleteOrder({ _id: ord._id })
         setDeleteOrdDialog(false);
         setOrd(emptyOrd);
-        if (!e) toast.current.show({ severity: 'success', summary: 'Successful', detail: 'ההזמנה נמחקה בהצלחה', life: 3000 });
+        if (!e){
+            toast.current.show({ severity: 'success', summary: 'Successful', detail: 'ההזמנה נמחקה בהצלחה', life: 3000 });
+            setRerenderKey((prevKey) => prevKey + 1);
+        } 
         else toast.current.show({ severity: 'error', summary: 'Error', detail: 'המחיקה נכשלה', life: 3000 });
     };
 
@@ -177,7 +183,7 @@ const OrdersManager = () => {
     }
 
     return (
-        <div>
+        <div key={rerenderKey}>
            <nav style={{position:"fixed",width:"100%",zIndex:10}}>
             <NavbarManager/></nav>
             <Toast ref={toast} />
@@ -244,7 +250,5 @@ const OrdersManager = () => {
         </div >
     );
 }
-
-
 
 export default OrdersManager

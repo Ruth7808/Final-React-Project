@@ -55,7 +55,7 @@ export default function AddPersonDialog() {
     return (
         <>
             <Button icon="pi pi-user-plus" size="large" rounded outlined severity="Filter" onClick={() => setVisible(true)} />
-            <Dialog header="יצירת לקוח" visible={visible} style={{ width: '50vw' }} onHide={() => setVisible(false)} >
+            <Dialog header="יצירת לקוח" visible={visible} style={{ width: '20vw',direction:'rtl' }} onHide={() => setVisible(false)} >
                 <div className="card flex justify-content-center">
                     <form onSubmit={formik.handleSubmit} className="flex flex-column gap-2">
                         <Toast ref={toast} />

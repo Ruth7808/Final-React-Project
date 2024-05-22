@@ -20,6 +20,7 @@ app.use("/api/product",require("./routers/productRouter"))
 app.use("/api/user",require("./routers/userRouter"))
 app.use("/api/auth",require("./routers/authRouter"))
 
+
 app.get("/", (req, res) => {
     res.send("hello for world")
 })

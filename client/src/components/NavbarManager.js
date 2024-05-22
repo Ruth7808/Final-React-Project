@@ -34,9 +34,7 @@ const NavbarManager = () => {
             case 'כלל ההזמנות':
                 navigate('/manager/orders')
                 break;
-            case 'סיכום':
-                navigate('/manager/conclude')
-                break;
+            
             default:
                 break;
         }
@@ -54,11 +52,6 @@ const NavbarManager = () => {
         },
         {
             label: 'משתמשים',
-            icon: 'pi pi-envelope',
-            template: itemRenderer
-        },
-        {
-            label: 'סיכום',
             icon: 'pi pi-envelope',
             template: itemRenderer
         }

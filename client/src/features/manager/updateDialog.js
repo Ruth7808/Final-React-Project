@@ -52,11 +52,11 @@ export default function UpdateDialog(props) {
         <>
             <Button label="" icon="pi pi-user-edit" onClick={() => setVisible(true)} text size="small" />
             <>
-                <Dialog header="עריכת משתמש" visible={visible} style={{ width: '50vw', direction: 'rtl' }} onHide={() => setVisible(false)} >
+                <Dialog header="עריכת משתמש" visible={visible} style={{ width: '20vw',direction:'rtl' }} onHide={() => setVisible(false)} >
                     <p className="m-0">
                         <form onSubmit={formik.handleSubmit} className="flex flex-column gap-2" style={{ alignItems: 'center' }}>
 
-                            <div className="p-float-label p-input-icon-right" style={{ margin: "5%" }}>
+                            <span className="p-float-label p-input-icon-right" style={{ margin: "5%" }}>
                                 <InputText placeholder="שם משתמש"
                                     {...register("userName", {})}
                                     value={formik.values.userName}
@@ -66,8 +66,8 @@ export default function UpdateDialog(props) {
                                 />
                                 <i className="pi pi-user" />
 
-                            </div>
-                            <div className="p-float-label p-input-icon-right" style={{ margin: "5%" }}>
+                            </span>
+                            <span className="p-float-label p-input-icon-right" style={{ margin: "5%" }}>
                                 <i className="pi pi-phone"></i>
                                 <InputText placeholder="טלפון"
                                     {...register("phone", {
@@ -78,9 +78,9 @@ export default function UpdateDialog(props) {
                                         formik.setFieldValue('phone', e.target.value);
                                     }}
                                 />
-                            </div>
+                            </span>
                             {errors?.phone?.type === "required" && <p>זהו שדה חובה</p>}
-                            <div className="p-float-label p-input-icon-right" style={{ margin: "5%" }}>
+                            <span className="p-float-label p-input-icon-right" style={{ margin: "5%" }}>
                                 <i className="pi pi-at"></i>
                                 <InputText placeholder="מייל"
                                     {...register("email", {
@@ -90,10 +90,10 @@ export default function UpdateDialog(props) {
                                         formik.setFieldValue('email', e.target.value);
                                     }}
                                 />
-                            </div>
-                            <div className="p-float-label p-input-icon-right" style={{ margin: "5%" }}>
+                            </span>
+                            {/* <span className="p-float-label p-input-icon-right" style={{ margin: "5%" }}>
                                 <i className="pi pi-check"></i>
-                                <Dropdown className="w-full md:w-17rm"
+                                <Dropdown className="w-full md:w-20rm"
                                     options={roles}
                                     optionLabel="role"
                                     name="role"
@@ -105,8 +105,23 @@ export default function UpdateDialog(props) {
                                         formik.setFieldValue('role', e.target.value);
                                     }}
                                 />
-                            </div>
-
+                            </span> */}
+                            
+                            <span className="p-float-label p-input-icon-right">
+                            <Dropdown
+                            className="w-full md:w-17rm"
+                                value={formik.values.role}
+                                options={roles}
+                                name="role"
+                                optionLabel="role"
+                                placeholder="הרשאה"
+                                onChange={(e) => {
+                                    formik.setFieldValue('role', e.value);
+                                }}
+                            />
+                             <i className="pi pi-check" style={{ marginRight: "7px" }} />
+                        </span>
+                        <br/>
                             <div className="flex justify-content-center " >
                                 <Button type='submit' label="עדכן" icon="pi pi-check" onClick={() => setVisible(false)} autoFocus />
                             </div>

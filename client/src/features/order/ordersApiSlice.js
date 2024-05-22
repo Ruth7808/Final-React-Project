@@ -26,7 +26,7 @@ const OrderApiSlice = apiSlice.injectEndpoints({
         }),
         addBasket: build.mutation({
             query: (order) => ({
-                url: "/api/order/addProduct",
+                url: "/api/order/product",
                 method: "PUT",
                 body: order
             }),
@@ -49,7 +49,7 @@ const OrderApiSlice = apiSlice.injectEndpoints({
         }),
         addProductValue: build.mutation({
             query: (product) => ({
-                url: "/api/order/addProductValue",
+                url: "/api/order/product/value",
                 method: "PUT",
                 body: product
             }),

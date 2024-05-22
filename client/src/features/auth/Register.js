@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRegisterMutation } from './authApiSlice';
+import { useLoginMutation, useRegisterMutation } from './authApiSlice';
 import { setToken } from './authSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -8,41 +8,53 @@ import { Button } from 'primereact/button';
 import { InputText } from "primereact/inputtext";
 import { Password } from 'primereact/password';
 const Register = () => {
-    const dispatch = useDispatch()
     const navigate = useNavigate()
-    const [registerFunc, { error,isError,isSuccess, data }] = useRegisterMutation()
+
+    const [registerFunc, { isError, isSuccess, data }] = useRegisterMutation()
+
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
+
     useEffect(() => {
-        if (isSuccess) {
-            dispatch(setToken(data))
-            navigate("/user")
+        if (isSuccess && data) {
+            navigate("/");
         }
-    }, [isSuccess])
+    }, [isSuccess, data]);
     
     useEffect(() => {
         if (isError) {
             alert("שם משתמש קיים כבר במערכת")
         }
-        
+
     }, [isError])
     const header = (
         <img alt="Card" src="https://primefaces.org/cdn/primereact/images/usercard.png" />
     );
-    const handleSubmit = (e) => {
-        
-        if(userName.length==0)
+    const handleSubmit = () => {
+
+        if (userName.length === 0)
             alert("שם משתמש חובה")
-        else if(password.length==0)
-        alert("סיסמא חובה") 
-        else if(email.length==0)
-        alert("כתובת מייל חובה") 
-        else
-        registerFunc({ userName, password,phone,email })
+        else if (password.length === 0)
+            alert("סיסמא חובה")
+        else if (phone.length === 0)
+            alert("טלפון חובה")
+        else if (!/^\+?[0-9]{8,15}$/.test(phone))
+            alert("מספר טלפון לא תקין")
+        else if (email.length === 0)
+            alert("כתובת מייל חובה")
+        else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
+            alert("כתובת מייל לא תקינה")
+        }
+
+        else {
+            registerFunc({ userName, password, phone, email })
+
+        }
+
     };
-    
+
     return (
         <><div className="card flex justify-content-center" style={{ margin: '5%', direction: 'rtl' }}>
             <Card title="כניסה למערכת" subTitle="אנא הכנס פרטי משתמש" header={header} className="md:w-25rem" >
@@ -51,54 +63,55 @@ const Register = () => {
                         <div className="card flex justify-content-center">
                             <div className="flex flex-column gap-2" dir='rtl'>
                                 <label>שם משתמש</label>
-                                <InputText 
-                                autoFocus
-                                required
-                                 rules={{ required: 'שדה חובה' }}
-                                 style={{ width: 276}}
-                                 onChange={(e) => setUserName(e.target.value)} />
+                                <InputText
+                                    autoFocus
+                                    required
+                                    rules={{ required: 'שדה חובה' }}
+                                    style={{ width: 276 }}
+                                    onChange={(e) => setUserName(e.target.value)} />
                             </div>
                         </div>
                         <div className="card flex justify-content-center">
                             <div className="flex flex-column gap-2" dir='rtl'>
                                 <label>סיסמא</label>
-                                
-                                <Password 
-                                required  
-                                onChange={(e) => setPassword(e.target.value)} 
-                                feedback={false} 
-                                tabIndex={1} 
-                                toggleMask />
+
+                                <Password
+                                    required
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    feedback={false}
+                                    tabIndex={1}
+                                    toggleMask />
                             </div>
                         </div>
                         <div className="card flex justify-content-center">
                             <div className="flex flex-column gap-2" dir='rtl'>
                                 <label htmlFor="username">מס' טלפון</label>
-                                <InputText 
-                                 required
-                                 style={{ width: 276 }}
-                                 onChange={(e) => setPhone(e.target.value)}/>
-                                
+                                <InputText
+                                    required
+                                    style={{ width: 276 }}
+                                    onChange={(e) => setPhone(e.target.value)} />
+
                             </div>
                         </div>
                         <div className="card flex justify-content-center">
                             <div className="flex flex-column gap-2" dir='rtl'>
-                                
+
                                 <label htmlFor="username">כתובת מייל</label>
                                 <InputText
-                                required="שדה חובה"
-                                type='email'
-                                 style={{width: 276}}
-                                 rules={{ required: 'שדה חובה' }}
-                                 onChange={(e) => setEmail(e.target.value)}/>
-                                
+                                    required="שדה חובה"
+                                    type='email'
+
+                                    style={{ width: 276 }}
+                                    rules={{ required: 'שדה חובה' }}
+                                    onChange={(e) => setEmail(e.target.value)} />
+
                             </div>
                         </div>
-                        <Button 
-                        type="submit" 
-                        label="כניסה" 
-                        style={{ width: 276,marginTop:'20px'}}
-                        onClick={()=>handleSubmit()} />
+                        <Button
+                            type="submit"
+                            label="כניסה"
+                            style={{ width: 276, marginTop: '20px' }}
+                            onClick={() => handleSubmit()} />
                     </form>
                 </div>
             </Card>
