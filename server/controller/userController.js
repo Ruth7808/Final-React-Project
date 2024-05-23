@@ -49,7 +49,6 @@ const updateUser = async (req, res) => {
             const hushPwd = await bcrypt.hash(password, 10)
             user.password = hushPwd
         }
-
         if (email)
             user.email = email
         if (phone)

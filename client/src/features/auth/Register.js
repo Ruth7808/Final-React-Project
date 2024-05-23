@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLoginMutation, useRegisterMutation } from './authApiSlice';
-import { setToken } from './authSlice';
-import { useDispatch } from 'react-redux';
+import { useRegisterMutation } from './authApiSlice';
 import { useNavigate } from 'react-router-dom';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
@@ -10,19 +8,13 @@ import { Password } from 'primereact/password';
 const Register = () => {
     const navigate = useNavigate()
 
-    const [registerFunc, { isError, isSuccess, data }] = useRegisterMutation()
+    const [registerFunc, { isError }] = useRegisterMutation()
 
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
 
-    useEffect(() => {
-        if (isSuccess && data) {
-            navigate("/");
-        }
-    }, [isSuccess, data]);
-    
     useEffect(() => {
         if (isError) {
             alert("שם משתמש קיים כבר במערכת")
@@ -50,7 +42,7 @@ const Register = () => {
 
         else {
             registerFunc({ userName, password, phone, email })
-
+            navigate("/");
         }
 
     };
@@ -109,7 +101,7 @@ const Register = () => {
                         </div>
                         <Button
                             type="submit"
-                            label="כניסה"
+                            label="רישום"
                             style={{ width: 276, marginTop: '20px' }}
                             onClick={() => handleSubmit()} />
                     </form>

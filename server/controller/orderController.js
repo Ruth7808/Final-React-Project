@@ -159,12 +159,7 @@ const conclude = async (req, res) => {
         prodJson.push({ [e.name]: 0 })
     })
 
-    // orders.map(e=>{
-    //     products.map(e=>{
-    //         if()
-    //     })
-    // })
-    // let data={price:0,payment:{check:0,cash:0,nedarim:0},products:{}}
+ 
     res.json(orders)
 }
 module.exports = {

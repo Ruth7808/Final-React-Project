@@ -19,7 +19,6 @@ const email = async (req, res) => {
     if (!email)
         return res.status(404).send("user not found")
     const code = Math.round(Math.random() * 10000000)
-    console.log(code);
     sendEmailToUser(email, "קוד האימות שלך הוא:\n" + code)
     return res.json({ code })
 }
