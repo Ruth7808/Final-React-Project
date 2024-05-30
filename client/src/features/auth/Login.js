@@ -48,7 +48,6 @@ const Login = () => {
 
     const handleSubmit =async (e) => {
         e.preventDefault();
-        debugger
         await loginFunc({ userName, password })
     };
   
