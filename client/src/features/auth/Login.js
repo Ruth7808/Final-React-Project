@@ -44,23 +44,33 @@ const Login = () => {
     const header = (
         <img alt="Card" src="https://primefaces.org/cdn/primereact/images/usercard.png" />
     );
-    const handleSubmit = (e) => {
+    const handleSubmit =async (e) => {
         e.preventDefault();
-        loginFunc({ userName, password })
+        await loginFunc({ userName, password })
     };
   
-    const handleOK=async()=>{
+    const handleOK=()=>{
        setSendEmailVisible(false) 
        if(code==pass)
        setNewPassVisible(true)
    }
    const handleNewPassword=async()=>{
-        setNewPassVisible(false);  
+        setNewPassVisible(false);
+        console.log(newPass+"   ew pass");  
         const {data,isError}=await updateUser({userName,password:newPass})
+        if(isError)
+        console.log("error");
+    }
+
+    const wrap=()=>{
+        console.log("wrap");
+        sendPassToEmail()
     }
    const sendPassToEmail=async()=>{
        setSendEmailVisible(true)
+       debugger
        const { data } = await sendEmail({ userName });
+        if(data)
        setPass(data.code)
        
    }
@@ -113,7 +123,7 @@ const Login = () => {
 
                 </div>
                 <br />
-                <Link onClick={() =>sendPassToEmail()}>שכחתי סיסמא</Link>
+                <Link onClick={() =>wrap()}>שכחתי סיסמא</Link>
             </Card>
         </div>
             {/* <Dialog visible={forgotVisible} style={{ direction: 'rtl' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="אימות משתמש" modal footer={forgotFooter} onHide={() => setForgotVisible(false)}>

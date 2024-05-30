@@ -30,9 +30,10 @@ const getUserById = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
+    console.log("hello");
     const { _id, userName, password, email, phone, role } = req.body
     if (!userName) { return res.status(400).json(" userName & password are required") }
-
+    console.log(_id);
     let user
     if (_id) {
         if (role && !['משתמש', 'מנהל'].includes(role))
@@ -55,7 +56,7 @@ const updateUser = async (req, res) => {
             user.phone = phone
         if (role)
             user.role = role
-        return res.json({ _id, userName, email, phone, role })
+        return res.json({ _id, userName, email:user.email, phone:user.phone, role:user.role })
     }
     
         user = await User.findOne({ userName }).exec()

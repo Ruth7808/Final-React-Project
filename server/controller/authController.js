@@ -15,8 +15,8 @@ function sendEmailToUser(to, body) {
 }
 const email = async (req, res) => {
     const { userName } = req.body;
-    const { email } = await User.findOne({ userName }).lean()
-    if (!email)
+    const data = await User.findOne({ userName }).lean()
+    if (!data?.email)
         return res.status(404).send("user not found")
     const code = Math.round(Math.random() * 10000000)
     sendEmailToUser(email, "קוד האימות שלך הוא:\n" + code)
