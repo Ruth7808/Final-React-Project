@@ -10,11 +10,11 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-function sendEmail(to, body) {
+function sendEmail(to, body,username) {
   const mailOptions = {
       from: ' <37214346710@mby.co.il>',
       to: to,
-      subject: "hello ",
+      subject: `hello ${username}!!!`,
       text: body
   };
   return transporter.sendMail(mailOptions);

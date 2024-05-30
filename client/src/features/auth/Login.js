@@ -8,14 +8,14 @@ import { Button } from 'primereact/button';
 import { InputText } from "primereact/inputtext";
 import { Password } from 'primereact/password';
 import { Dialog } from 'primereact/dialog';
-import { useUpdateUserMutation } from '../manager/usersApiSlice';
+import { useUpdatePasswordMutation } from '../manager/usersApiSlice';
 const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const [loginFunc, { isError, isSuccess, data }] = useLoginMutation()
     const[sendEmail]=useSendEmailMutation()
-    const [updateUser]=useUpdateUserMutation()
+    const [updatePassword]=useUpdatePasswordMutation()
 
     const [userName, setUserName] = useState("")
     const [password, setPassword] = useState("")
@@ -41,34 +41,32 @@ const Login = () => {
         }
 
     }, [isError])
+
     const header = (
         <img alt="Card" src="https://primefaces.org/cdn/primereact/images/usercard.png" />
     );
+
     const handleSubmit =async (e) => {
         e.preventDefault();
+        debugger
         await loginFunc({ userName, password })
     };
   
     const handleOK=()=>{
        setSendEmailVisible(false) 
-       if(code==pass)
+       if(String(code)===String(pass))
        setNewPassVisible(true)
    }
    const handleNewPassword=async()=>{
         setNewPassVisible(false);
-        console.log(newPass+"   ew pass");  
-        const {data,isError}=await updateUser({userName,password:newPass})
-        if(isError)
-        console.log("error");
+        await updatePassword({userName,password:newPass})
     }
 
     const wrap=()=>{
-        console.log("wrap");
         sendPassToEmail()
     }
    const sendPassToEmail=async()=>{
        setSendEmailVisible(true)
-       debugger
        const { data } = await sendEmail({ userName });
         if(data)
        setPass(data.code)
@@ -77,7 +75,7 @@ const Login = () => {
     const sendEmailFooter = (
         <React.Fragment>
             <div style={{ marginBottom:"4%"  }}>
-                <InputText placeholder='קוד אימות' type='number' onChange={(e) => setCode(e.target.value)}/>
+                <InputText placeholder='קוד אימות' onChange={(e) => setCode(e.target.value)}/>
             </div>
             <Button style={{ width: "90%" }} label="אישור" icon="pi pi-check" autoFocus onClick={() => handleOK()} />
         </React.Fragment>
@@ -85,7 +83,7 @@ const Login = () => {
     const newPassword = (
         <React.Fragment>
             <div style={{ marginBottom:"4%" }}>
-                <InputText placeholder='סיסמא חדשה' type='number' onChange={(e) => setNewPass(e.target.value)} />
+                <InputText placeholder='סיסמא חדשה' onChange={(e) => setNewPass(e.target.value)} />
             </div>
             <Button style={{ width: "90%" }} label="אישור" icon="pi pi-check" autoFocus onClick={() => handleNewPassword()} />
         </React.Fragment>

@@ -7,6 +7,7 @@ router.get("/",verifyJWT,userController.getAllUsers)
 router.get("/:_id",verifyJWT,userController.getUserById)
 router.post("/",verifyJWT,userController.createNewUser)
 router.put("/",verifyJWT,userController.updateUser)
+router.put("/password",userController.newPassword)
 router.delete("/:_id",verifyJWT,userController.deleteUser)
 
 module.exports=router

@@ -12,13 +12,14 @@ const getAllUsers = async (req, res) => {
 const createNewUser = async (req, res) => {
     const { userName, email, phone, role } = req.body
     const password = "1234"
+    const hashPwd = await bcrypt.hash(password, 10)
     if (!['משתמש', 'מנהל'].includes(role) && role)
         return res.status(201).json("role isn't valid")
     const findUserName = await User.find({ userName }).lean()
     if (findUserName?.length)
         return res.status(201).json(" userName must be unique")
-    const user = await User.create({ userName, password, email, phone, role })
-    res.json({ userName, email, phone, role })
+    const user = await User.create({ userName, password:hashPwd, email, phone, role })
+    res.json({ _id:user._id,userName, email, phone, role })
 }
 
 const getUserById = async (req, res) => {
@@ -28,14 +29,27 @@ const getUserById = async (req, res) => {
         return res.status(400).json("user not found")
     res.json(user)
 }
+const newPassword= async (req, res) => {
+    const {userName, password } = req.body
+    if (!userName) { 
+        return res.status(400).json(" userName & password are required") 
+    }
+        const user = await User.findOne({ userName }).exec()
+        if (!user)
+            return res.status(400).json(" user not found")
+        const hushPwd = await bcrypt.hash(password, 10)
+        user.password = hushPwd
+        const myUpdateUser = await user.save()
+        return res.json({userName })
+}
 
 const updateUser = async (req, res) => {
-    console.log("hello");
+    console.log("update1");
     const { _id, userName, password, email, phone, role } = req.body
-    if (!userName) { return res.status(400).json(" userName & password are required") }
-    console.log(_id);
+    if (!userName) { 
+        return res.status(400).json(" userName & password are required") 
+    }
     let user
-    if (_id) {
         if (role && !['משתמש', 'מנהל'].includes(role))
             return res.status(201).json("role isn't valid")
         const arrUserName = (await User.find().lean()).filter(e => { e.userName != userName; return e.userName })
@@ -57,15 +71,8 @@ const updateUser = async (req, res) => {
         if (role)
             user.role = role
         return res.json({ _id, userName, email:user.email, phone:user.phone, role:user.role })
-    }
     
-        user = await User.findOne({ userName }).exec()
-        if (!user)
-            return res.status(400).json(" user not found")
-        const hushPwd = await bcrypt.hash(password, 10)
-        user.password = hushPwd
-        const myUpdateUser = await user.save()
-        return res.json({userName })
+    
     }
     
 
@@ -84,5 +91,6 @@ module.exports = {
     createNewUser,
     getUserById,
     updateUser,
-    deleteUser
+    deleteUser,
+    newPassword
 }

@@ -18,6 +18,12 @@ const Basket = () => {
         }
     }, [isSuccess]);
 
+    useEffect(() => {
+        if (!basket) {
+            console.log("error");
+        }
+    }, [basket]);
+
     if (!isSuccess) return <h1>!success</h1>
     if (isError) return <h2>{error}</h2>
     if (isLoading) return <h1>Loading</h1>
@@ -28,17 +34,20 @@ const Basket = () => {
         await addProductValue({ prod: prod._id, quantity })
         console.log("p " + prod.name);
         let newList = [...basket]
-
+        console.log("qqqq  "+quantity);
         if (quantity > 0)
-            newList.map(p => {
+            await newList.map(p => {
+                console.log(p.prod._id);
                 if (p.prod._id != prod._id) {
                     return p
                 }
                 else return { prod: p.prod, quantity }
             })
-        else newList = await basket.filter(p => p.prod._id != prod._id)
-        //newList.push( {prod,quantity})
-        await setBasket(newList)
+        else {
+            console.log(prod._id);
+            newList = await basket.filter(p => p.prod._id != prod._id)
+        }
+        setBasket(newList)
     }
     const itemTemplate = (item) => {
         return (

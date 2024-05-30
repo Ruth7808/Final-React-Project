@@ -3,9 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const mailer = require('../service/mail');
 
-
-function sendEmailToUser(to, body) {
-    mailer.sendEmail(to, body)
+function sendEmailToUser(to, body,username) {
+    mailer.sendEmail(to, body,username)
         .then(info => {
             console.log('Email sent: ', info.response);
         })
@@ -19,7 +18,7 @@ const email = async (req, res) => {
     if (!data?.email)
         return res.status(404).send("user not found")
     const code = Math.round(Math.random() * 10000000)
-    sendEmailToUser(email, "קוד האימות שלך הוא:\n" + code)
+    sendEmailToUser(data.email, "קוד האימות שלך הוא:\n" + code,userName)
     return res.json({ code })
 }
 

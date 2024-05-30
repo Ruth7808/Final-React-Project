@@ -41,6 +41,14 @@ const UserApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: ["Users"]
         }),
+        updatePassword: build.mutation({
+            query: (user) => ({
+                url: "/api/user/password",
+                method: "PUT",
+                body:user
+            }),
+            invalidatesTags: ["Users"]
+        }),
         getBasket: build.query({
             query: () => ({
                 url: "/api/user/basket",
@@ -58,4 +66,4 @@ const UserApiSlice = apiSlice.injectEndpoints({
         })
     })
 })
-export const { useGetUsersQuery,useUpdateUserMutation, useCreateUserMutation, useAddBasketMutation, useGetBasketQuery,useCompleteMutation, useDeleteUserMutation  } = UserApiSlice
+export const { useGetUsersQuery,useUpdateUserMutation, useCreateUserMutation, useAddBasketMutation, useGetBasketQuery,useCompleteMutation, useDeleteUserMutation,useUpdatePasswordMutation  } = UserApiSlice
